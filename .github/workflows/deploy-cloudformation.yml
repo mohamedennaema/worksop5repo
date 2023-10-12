@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Configure AWS CLI
         run: |
           echo "[default]
@@ -36,3 +39,5 @@ jobs:
             --region us-east-1 # Replace with your desired AWS region
         env:
           AWS_PAGER: ""
+
+    capabilities: CAPABILITY_NAMED_IAM
