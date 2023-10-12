@@ -21,6 +21,7 @@ jobs:
           aws cloudformation create-stack --stack-name workshop5ennaem \
             --template-body file://template.yaml \
             --region us-east-1 # Replace with your desired AWS region
+            --capabilities CAPABILITY_NAMED_IAM
 
       - name: Wait for Stack to Complete
         run: |
@@ -35,4 +36,3 @@ jobs:
             --region us-east-1 # Replace with your desired AWS region
         env:
           AWS_PAGER: ""
-    capabilities: CAPABILITY_NAMED_IAM
