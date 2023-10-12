@@ -39,5 +39,3 @@ jobs:
             --region us-east-1 # Replace with your desired AWS region
         env:
           AWS_PAGER: ""
-
-    capabilities: CAPABILITY_NAMED_IAM
