@@ -13,29 +13,33 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Create AWS Configuration Directory
+        run: mkdir -p $HOME/.aws
+
       - name: Configure AWS CLI
         run: |
           echo "[default]
           aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" > ~/.aws/credentials
+          aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" > $HOME/.aws/credentials
+
+          echo "[default]
+          region = us-east-1" > $HOME/.aws/config
 
       - name: Deploy CloudFormation Stack
         run: |
-          aws cloudformation create-stack --stack-name workshop5ennaem \
-            --template-body file://template.yaml \
-            --region us-east-1 \
-            --capabilities CAPABILITY_NAMED_IAM
+          aws cloudformation create-stack --stack-name YouneWorkshop55 \
+            --template-body file://$GITHUB_WORKSPACE/template.yaml \
+            --capabilities CAPABILITY_NAMED_IAM \
+            --region us-east-1  # Replace with your desired AWS region
 
       - name: Wait for Stack to Complete
         run: |
-          aws cloudformation wait stack-create-complete --stack-name workshop5ennaem \
-            --region us-east-1 # Replace with your desired AWS region
+          aws cloudformation wait stack-create-complete --stack-name YouneWorkshop55 \
+            --region us-east-1  # Replace with your desired AWS region
 
       - name: Display Stack Outputs
         run: |
-          aws cloudformation describe-stacks --stack-name workshop5ennaem \
+          aws cloudformation describe-stacks --stack-name YouneWorkshop55 \
             --query 'Stacks[0].Outputs' \
             --output table \
-            --region us-east-1 # Replace with your desired AWS region
-        env:
-          AWS_PAGER: ""
+            --region us-east-1  # Replace with your desired AWS region
